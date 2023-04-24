@@ -19,7 +19,7 @@ state = {
 }
 
 async componentDidUpdate(_, prevState) {
-  const { query, page, total } = this.state;
+  const { query, page } = this.state;
 
   if (query !== prevState.query || page !== prevState.page) {
     this.setState({isLoading: true})
