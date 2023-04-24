@@ -3,6 +3,7 @@ import { BsSearch } from 'react-icons/bs'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import css from "./Searchbar.module.css"
 import * as yup from "yup";
+import { toast } from "react-toastify";
 import PropTypes from 'prop-types';
 
 export class Searchbar extends Component {
@@ -19,14 +20,18 @@ export class Searchbar extends Component {
         query: yup.string().required(),
     })
         
-    handleSubmit = async (values, actions) => {
+    handleSubmit = (values, actions) => {
         const {resetForm, setSubmitting} = actions;
         const {onFormSubmit} = this.props
       
-        if (values.query.trim() === '') return;
+        if (values.query.trim() === '') {
+            toast.error('Please, enter your search query!');
+            resetForm();
+            return;
+        }
 
 
-        await onFormSubmit(values.query);
+        onFormSubmit(values.query);
 
         setSubmitting(); // --- to make submit btn disabled during submitting
         resetForm();
